@@ -2,24 +2,35 @@ const mqtt = require('mqtt');
 const aedes = require('aedes')()
 const net = require('net')
 var cron = require('node-cron');
+var fs = require('fs');
+var path = require('path');
+import { getRandomElem } from "./helpers";
 
-export var mqttMessage = "";
+export var inMemoryMemeBs64 = ""
 
 const server = net.createServer(aedes.handle)
+export const memesTopic = "memes"
 const port = 1883
+const memes = [
+    "1.jpeg",
+    "2.png",
+    "3.jpeg",
+    "4.jpeg",
+    "5.png",
+]
 
 server.listen(port, function () {
   console.log('server started and listening on port ', port)
 })
 
-const client  = mqtt.connect(`mqtt://localhost:${port}`)
+export const mqttClient  = mqtt.connect(`mqtt://localhost:${port}`)
 
-client.on('connect', () => client.subscribe('presence'))
+const publishNewMeme = () => {
+    const memeFname = getRandomElem(memes)
+    const memePath = path.resolve(__dirname, `../../src/memes/${memeFname}`)
+    const image = fs.readFileSync(memePath, {encoding: "base64"})
+    const extension = memeFname.split(".").pop();
+    mqttClient.publish(memesTopic, `data:image/${extension};base64,${image}`)
+}
 
-client.on('message', (topic: string, message: string) => {
-    mqttMessage = message.toString()
-})
-
-cron.schedule('* * * * * *', () => {
-    client.publish('presence', new Date().toISOString())
-});
+cron.schedule('* * * * * *', () => publishNewMeme());

@@ -1,23 +1,22 @@
 import express, { Express } from 'express';
-import {mqttMessage} from "./src/mqtt";
+import {inMemoryMemeBs64, memesTopic, mqttClient} from "./src/mqtt";
+
+const port = "8000";
+mqttClient.on('connect', () => mqttClient.subscribe(memesTopic))
 
 const app: Express = express();
 app.use(express.static('public'));
 app.set('view engine', 'pug');
 
-const port = "8000";
-
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });
-
 
 app.get('/', function (req, res) {
   res.render('index', { title: 'MQTT Test', message: "MQTT current message:"});
 });
 
-
-app.get('/data', async function(req, res) {
+app.get('/memes', async function(req, res) {
   res.set({
     'Cache-Control': 'no-cache',
     'Content-Type': 'text/event-stream',
@@ -27,8 +26,8 @@ app.get('/data', async function(req, res) {
 
   res.write('retry: 10000\n\n');
 
-  while (true) {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    res.write(`data: ${mqttMessage}\n\n`);
-  }
+  mqttClient.on('message', (topic: string, message: string) => {
+    res.write(`data: ${message} \n\n`);
+  })
+
 });
