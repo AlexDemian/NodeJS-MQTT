@@ -33,4 +33,4 @@ const publishNewMeme = () => {
     mqttClient.publish(memesTopic, `data:image/${extension};base64,${image}`)
 }
 
-cron.schedule('* * * * * *', () => publishNewMeme());
+cron.schedule('* * * * * *', publishNewMeme);
