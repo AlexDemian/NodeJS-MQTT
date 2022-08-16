@@ -3,7 +3,7 @@
 ### Description
 Another one app just for fun and playing with MQTT client and server on NodeJS.
 ### Overview
-Generally, app demonstrates how IoT device can be connected with Node server and wev app interface via Server-Sent Events.
+Generally, app demonstrates how IoT device can be connected with Node server and web app interface via Server-Sent Events.
 ### Infrastructure
 NodeJS/Express server
 MQTT broker/server
