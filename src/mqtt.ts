@@ -6,8 +6,6 @@ var fs = require('fs');
 var path = require('path');
 import { getRandomElem } from "./helpers";
 
-export var inMemoryMemeBs64 = ""
-
 const server = net.createServer(aedes.handle)
 export const memesTopic = "memes"
 const port = 1883
