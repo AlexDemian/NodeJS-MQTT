@@ -19,3 +19,4 @@ npm run dev
 2) Client gets index page which initializes connection to NodeJS server via EventSource API.
 3) Server accepts connection and every time handles images directly from MQTT broker to the opened connection just after images are exposed in the MQTT broker.
 4) Client receives (wihout page reload or any kind of polling) encoded memes and shows it for user
+![woohoo](https://user-images.githubusercontent.com/27147054/184895199-e31254ed-2306-49c9-8d77-e19ce9a380ac.gif)
