@@ -7,6 +7,7 @@ mqttClient.on('connect', () => mqttClient.subscribe(memesTopic))
 const app: Express = express();
 app.use(express.static('public'));
 app.set('view engine', 'pug');
+app.set('views', './src/views');
 
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
