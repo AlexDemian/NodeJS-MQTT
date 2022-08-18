@@ -1,8 +1,8 @@
-const source = new EventSource('/memes');
+const source = new EventSource("/memes");
 
 var image = new Image();
 document.body.appendChild(image);
 
-source.addEventListener('message', message => {
-    image.src = message.data;
+source.addEventListener("message", (message) => {
+  image.src = message.data;
 });
