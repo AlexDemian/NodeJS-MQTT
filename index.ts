@@ -1,5 +1,5 @@
 import express, { Express } from 'express';
-import {inMemoryMemeBs64, memesTopic, mqttClient} from "./src/mqtt";
+import {memesTopic, mqttClient} from "./src/mqtt";
 
 const port = "8000";
 mqttClient.on('connect', () => mqttClient.subscribe(memesTopic))
@@ -25,9 +25,7 @@ app.get('/memes', async function(req, res) {
   res.flushHeaders();
 
   res.write('retry: 10000\n\n');
-
-  mqttClient.on('message', (topic: string, message: string) => {
-    res.write(`data: ${message} \n\n`);
-  })
-
+  const handleMessage = (_: string, message: string) => res.write(`data: ${message} \n\n`)
+  mqttClient.on('message', handleMessage)
+  res.on('close', ()=>mqttClient.removeListener('message', handleMessage));
 });

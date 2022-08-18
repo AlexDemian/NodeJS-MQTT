@@ -1,9 +1,9 @@
 const mqtt = require('mqtt');
 const aedes = require('aedes')()
 const net = require('net')
-var cron = require('node-cron');
-var fs = require('fs');
-var path = require('path');
+const cron = require('node-cron');
+const fs = require('fs');
+const path = require('path');
 import { getRandomElem } from "./helpers";
 
 const server = net.createServer(aedes.handle)
