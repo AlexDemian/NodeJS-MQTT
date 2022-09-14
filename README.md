@@ -10,10 +10,10 @@ Generally, app demonstrates how IoT device can be connected with Node server and
 
 ### Infrastructure
 
-NodeJS/Express server
-MQTT broker/server
-MQTT client
-Node-cron
+NodeJS/Express server <br>
+MQTT broker/server <br>
+MQTT client <br>
+Node-cron <br>
 
 ### Installation & Startup
 
